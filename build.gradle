@@ -1,0 +1,87 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+    }
+}
+
+group 'fr.litarvan.craftix'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+archivesBaseName = 'craftix-wrapper'
+def mainClass = 'fr.litarvan.craftix.wrapper.Main'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'http://litarvan.github.io/maven/'
+    }
+}
+
+dependencies {
+    compile 'fr.litarvan:openlauncherlib:3.0.3-BETA'
+    compile 'fr.theshark34.swinger:swinger:1.0.1-BETA'
+    compile 'fr.theshark34.s-update:s-update:3.1.0-BETA'
+
+    compile 'org.json:json:20160810'
+}
+
+task fatjar(type: Jar) {
+    from 'LICENSE'
+    from 'LICENSE.LESSER'
+
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    with jar
+}
+
+jar {
+    from 'LICENSE'
+    from 'LICENSE.LESSER'
+
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId group
+            artifactId archivesBaseName
+            version = version
+
+            from components.java
+
+            artifact sourcesJar
+        }
+    }
+}
+
+artifacts {
+    archives sourcesJar
+}

@@ -1,0 +1,25 @@
+{
+  "splash": "/splash.png",
+  "icon": "/icon.png",
+  "title": "Craftix",
+  "id": "craftix-example",
+  "version": "indev-201701231839",
+  "launcher-update": "http://my-supdate-server/",
+  "bar": {
+    "background": "#999999",
+    "foreground": "#cccccc",
+    "text": "#ffffff",
+    "height": 20
+  },
+  "strings": {
+    "retrieving-versions": "Parsing Craftix versions...",
+    "checking": "Checking for update...",
+    "updating-electron": "Updating Electron (could take a while)...",
+    "updating-craftix": "Updating Craftix...",
+    "download-fail": "Couldn't download required files, please check your connection and try again in 5 minutes",
+    "updating-launcher": "Updating launcher...",
+    "launcher-fail": "Couldn't download launcher, please check your connection or contact the server admin",
+    "launching": "Launching launcher with Electron...",
+    "launching-fail": "Error while launching electron, this is bad, please try again or try to delete ${folder} and then try again"
+  }
+}
